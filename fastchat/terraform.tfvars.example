@@ -1,0 +1,9 @@
+project       = "project"
+username      = "ubuntu"
+instance_name = "ubuntu-tfcli"
+image         = "Featured-Ubuntu22"
+flavor        = "m3.large"
+keypair       = "somekey"
+power_state   = "active"
+enable_gpu    = false
+# user_data = ""
