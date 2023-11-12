@@ -1,0 +1,58 @@
+{
+  "schema_url": "https://gitlab.com/cyverse/cacao-common/-/raw/master/template/metadata-schemas/v3/schema.json",
+  "name": "terraform-hello-world",
+  "author": "Edwin Skidmore",
+  "author_email": "edwin@cyverse.org",
+  "description": "edwin's hello world example",
+  "template_type": "openstack_terraform",
+  "purpose": "openstack_compute",
+  "cacao_pre_tasks": [],
+  "cacao_post_tasks": [],
+  "parameters": [
+    {
+      "name": "project",
+      "type": "cacao_provider_project",
+      "description": "OpenStack Project ID"
+    },
+    {
+      "name": "region",
+      "type": "cacao_provider_region",
+      "default": "IU",
+      "description": "Openstack region"
+    },
+    {
+      "name": "instance_name",
+      "type": "string",
+      "description": "Instance name"
+    },
+
+    {
+      "name": "flavor",
+      "type": "cacao_provider_flavor",
+      "description": "Instance type"
+    },
+    {
+      "name": "keypair",
+      "type": "cacao_provider_key_pair",
+      "default": "cacao-ssh-key",
+      "description": "Key-pair for instance access"
+    },
+    {
+      "name": "power_state",
+      "type": "string",
+      "default": "active",
+      "description": "Power state",
+      "enum": [
+        "active",
+        "shutoff",
+        "suspend",
+        "shelved_offloaded"
+      ]
+    },
+    {
+      "name": "user_data",
+      "type": "cacao_cloud_init",
+      "description": "cloud init script"
+    }
+  ]
+}

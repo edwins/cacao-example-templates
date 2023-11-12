@@ -1,0 +1,34 @@
+{
+    "schema_url": "https://gitlab.com/cyverse/cacao-common/-/raw/master/template/ui-schemas/v1/schema.json",
+    "schema_version": "1",
+    "author": "Edwin Skidmore",
+    "author_email": "edwins@arizona.edu",
+    "steps": [
+        {
+            "title": "Parameters",
+            "items": [
+                {
+                    "name": "region",
+                    "ui_label": "Choose Region"
+                },
+                {
+                    "name": "instance_name",
+                    "ui_label": "Instance name"
+                },
+                {
+                    "name": "power_state",
+                    "ui_label": "Power state"
+                },
+                {
+                    "type": "row",
+                    "items":[
+                        {
+                            "name": "flavor",
+                            "ui_label": "Size"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,8 @@
+project = "insert-openstack-project"
+# region = "insert-openstack-region"
+instance_name = "my-instance"
+image_uuid = "insert-openstack-image-uuid"
+flavor = "m3.tiny"
+keypair = "insert-some-keypair"
+power_state = "active"
+# user_data = ""

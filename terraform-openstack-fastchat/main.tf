@@ -26,7 +26,7 @@ resource "openstack_compute_instance_v2" "os_instances" {
     destination_type = "volume"
     boot_index = 0
     delete_on_termination = true
-    volume_size = 100
+    volume_size = var.root_storage_size
   }
 
   network {

@@ -3,6 +3,11 @@ variable "project" {
   description = "project name"
 }
 
+variable "username" {
+  type = string
+  description = "username"
+}
+
 variable "region" {
   type = string
   description = "string, openstack region name; default = IU"
@@ -14,10 +19,17 @@ variable "instance_name" {
   description = "name of instance"
 }
 
+variable "image_uuid" {
+  type = string
+  description = "string, image id; image will have priority if both image and image name are provided"
+  default = ""
+}
+
+
 variable "image" {
   type = string
-  description = "string, image name"
-  default = ""
+  description = "string, image id; image will have priority if both image and image name are provided"
+  default = "Featured-Ubuntu22"
 }
 
 variable "flavor" {
@@ -42,15 +54,4 @@ variable "user_data" {
   type = string
   description = "cloud init script"
   default = ""
-}
-
-variable "username" {
-  type = string
-  description = "username"
-}
-
-variable "enable_gpu" {
-    type = bool
-    description = "if set to true, will enable gpu; for example purposes since one can simply scan the flavor to set gpu"
-    default = false
 }
