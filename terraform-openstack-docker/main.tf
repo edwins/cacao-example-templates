@@ -60,7 +60,7 @@ resource "null_resource" "provision" {
 
   provisioner "remote-exec" {
     inline = [
-      "sudo docker run -d -p 80:9000 h2non/imaginary"
+      "sudo docker run -d -p 80:9000 h2non/imaginary -enable-url-source"
     ]
   }
 }

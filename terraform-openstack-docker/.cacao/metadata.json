@@ -3,7 +3,7 @@
   "name": "terraform-hello-world",
   "author": "Edwin Skidmore",
   "author_email": "edwin@cyverse.org",
-  "description": "edwin's hello world example",
+  "description": "Docker Hello World",
   "template_type": "openstack_terraform",
   "purpose": "openstack_compute",
   "cacao_pre_tasks": [],
