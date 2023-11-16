@@ -52,13 +52,18 @@ resource "openstack_compute_floatingip_associate_v2" "os_floatingips_associate" 
   instance_id = openstack_compute_instance_v2.os_instances.id
 }
 
+locals {
+  split_username = split("@", var.username)
+  real_username = local.split_username[0]
+}
+
 resource "null_resource" "provision" {
   depends_on = [openstack_networking_floatingip_v2.os_floatingips[0],openstack_compute_instance_v2.os_instances]
 
   connection {
     type = "ssh"
     agent = true
-    user = var.username
+    user = local.real_username
     host = openstack_networking_floatingip_v2.os_floatingips[0].address
   }
 
@@ -70,16 +75,16 @@ resource "null_resource" "provision" {
         sudo pip3 install --upgrade jinja2
 
         # creating a directory for logs
-        mkdir /home/${var.username}/fastchat
+        mkdir /home/${local.real_username}/fastchat
 
         # running the controller in the background
-        nohup python3 -m fastchat.serve.controller >/home/${var.username}/fastchat/controller.log 2>&1 &
+        nohup python3 -m fastchat.serve.controller >/home/${local.real_username}/fastchat/controller.log 2>&1 &
 
         # running the workers in the background
         if ["${var.enable_gpu}" == "true"]; then
-            nohup python3 -m fastchat.serve.model_worker --model-path lmsys/vicuna-7b-v1.5 >/home/${var.username}/fastchat/worker.log 2>&1 &
+            nohup python3 -m fastchat.serve.model_worker --model-path lmsys/vicuna-7b-v1.5 >/home/${local.real_username}/fastchat/worker.log 2>&1 &
         else
-            nohup python3 -m fastchat.serve.model_worker --model-path lmsys/vicuna-7b-v1.5 --device cpu >/home/${var.username}/fastchat/worker.log 2>&1 &
+            nohup python3 -m fastchat.serve.model_worker --model-path lmsys/vicuna-7b-v1.5 --device cpu >/home/${local.real_username}/fastchat/worker.log 2>&1 &
         fi
 
         # wait until workers are ready
@@ -95,7 +100,7 @@ resource "null_resource" "provision" {
         sleep 5
 
         # running gradio web in the background
-        nohup python3 -m fastchat.serve.gradio_web_server --port 8080 >/home/${var.username}/fastchat/web.log 2>&1 &
+        nohup python3 -m fastchat.serve.gradio_web_server --port 8080 >/home/${local.real_username}/fastchat/web.log 2>&1 &
 
         sleep 1
         EOF
