@@ -2,6 +2,6 @@
 */.terraform*
 */terraform.tfstate*
 cacao
-*/quick.sh
+*/fsmv.sh
 */*.model
-*/.cacao/*.model
+*/tmp
