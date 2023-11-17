@@ -17,13 +17,13 @@ variable "instance_name" {
 variable "image" {
   type = string
   description = "string, image name"
-  default = ""
+  default = "Featured-Ubuntu22"
 }
 
 variable "flavor" {
   type = string
   description = "flavor or size of instance to launch"
-  default = "m1.tiny"
+  default = "m3.large"
 }
 
 variable "keypair" {

@@ -1,8 +1,8 @@
 {
     "schema_url": "https://gitlab.com/cyverse/cacao-common/-/raw/master/template/ui-schemas/v1/schema.json",
     "schema_version": "1",
-    "author": "Sean Davey",
-    "author_email": "sdavey@arizona.edu",
+    "author": "Edwin Skidmore",
+    "author_email": "edwins@arizona.edu",
     "steps": [
         {
             "title": "Parameters",
@@ -30,18 +30,21 @@
                     "type": "row",
                     "items":[
                         {
-                            "name": "instance_count",
-                            "ui_label": "# of Instances"
-                        },
-                        {
                             "name": "flavor",
                             "ui_label": "Size"
                         }
                     ]
                 },
                 {
-                    "name": "root_storage_size",
-                    "ui_label": "Root disk size (GB)"
+                    "type": "advanced_settings",
+                    "collapsible": true,
+                    "title": "Advanced",
+                    "items": [
+                        {
+                            "name": "root_storage_size",
+                            "ui_label": "Root disk size (GB)"
+                        }
+                    ]
                 }
             ]
         }
