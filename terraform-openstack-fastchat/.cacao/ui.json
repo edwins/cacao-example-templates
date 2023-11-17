@@ -38,7 +38,7 @@
                 {
                     "name": "model",
                     "ui_label": "Model",
-                    "field_type": "listbox"
+                    "field_type": "select"
                 },
                 {
                     "type": "advanced_settings",
