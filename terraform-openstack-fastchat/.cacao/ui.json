@@ -20,7 +20,7 @@
                     "ui_label": "Power state"
                 },
                 {
-                    "name": "image_name",
+                    "name": "image",
                     "ui_label": "Boot image name",
                     "parameters": [
                         { "key": "windows_disclaimer", "value": true }

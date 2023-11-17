@@ -31,7 +31,7 @@
       "description": "Instance name"
     },
     {
-      "name": "image_name",
+      "name": "image",
       "type": "cacao_provider_image_name",
       "description": "Boot image name",
       "default": ""
