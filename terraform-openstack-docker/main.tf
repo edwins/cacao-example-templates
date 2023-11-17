@@ -43,19 +43,24 @@ resource "openstack_compute_floatingip_associate_v2" "os_floatingips_associate" 
   instance_id = openstack_compute_instance_v2.os_instances.id
 }
 
+locals {
+  split_username = split("@", var.username)
+  real_username = local.split_username[0]
+}
+
 resource "null_resource" "provision" {
   depends_on = [openstack_networking_floatingip_v2.os_floatingips[0],openstack_compute_instance_v2.os_instances]
 
   connection {
     type = "ssh"
     agent = true
-    user = var.username
+    user = local.real_username
     host = openstack_networking_floatingip_v2.os_floatingips[0].address
   }
 
   provisioner "remote-exec" {
     inline = [
-      "sudo docker run -d -p 80:9000 h2non/imaginary"
+      "sudo docker run -d -p 80:9000 h2non/imaginary -enable-url-source"
     ]
   }
 }

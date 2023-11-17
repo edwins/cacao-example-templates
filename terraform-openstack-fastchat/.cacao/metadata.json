@@ -1,10 +1,9 @@
 {
   "schema_url": "https://gitlab.com/cyverse/cacao-common/-/raw/master/template/metadata-schemas/v3/schema.json",
-  "schema_version": "3",
-  "name": "example terraform template of fastchat",
+  "name": "terraform-fastchat",
   "author": "Edwin Skidmore",
   "author_email": "edwin@cyverse.org",
-  "description": "launch an instance of fastchat",
+  "description": "Fastchat Hello World",
   "template_type": "openstack_terraform",
   "purpose": "openstack_compute",
   "cacao_pre_tasks": [],
@@ -12,9 +11,13 @@
   "parameters": [
     {
       "name": "username",
-      "type": "cacao_username",
-      "default": "username",
+      "type": "cacao_username_unix",
       "description": "CACAO username"
+    },
+    {
+      "name": "project",
+      "type": "cacao_provider_project",
+      "description": "OpenStack Project ID"
     },
     {
       "name": "region",
@@ -25,24 +28,18 @@
     {
       "name": "instance_name",
       "type": "string",
-      "description": "Instance name",
-      "editable": true
+      "description": "Instance name"
     },
     {
       "name": "image",
-      "type": "cacao_provider_image",
-      "description": "Boot image id",
+      "type": "cacao_provider_image_name",
+      "description": "Boot image name",
       "default": ""
     },
     {
       "name": "flavor",
       "type": "cacao_provider_flavor",
       "description": "Instance type"
-    },
-    {
-      "name": "project",
-      "type": "cacao_provider_project",
-      "description": "OpenStack Project ID"
     },
     {
       "name": "keypair",
@@ -54,26 +51,24 @@
       "name": "power_state",
       "type": "string",
       "default": "active",
-      "enum": ["active", "shutoff", "suspend", "shelved_offloaded"],
       "description": "Power state",
-      "editable": true
+      "enum": [
+        "active",
+        "shutoff",
+        "suspend",
+        "shelved_offloaded"
+      ]
     },
     {
       "name": "user_data",
       "type": "cacao_cloud_init",
-      "description": "Cloud-init user data for processing ssh keys for now"
+      "description": "cloud init script"
     },
     {
       "name": "root_storage_size",
       "type": "integer",
       "description": "Size of root storage in GB",
-      "default": -1
-    },
-    {
-      "name": "root_storage_delete_on_termination",
-      "type": "bool",
-      "description": "if true, will delete the root storage when instance is deleted",
-      "default": true
+      "default": 100
     }
   ]
 }
