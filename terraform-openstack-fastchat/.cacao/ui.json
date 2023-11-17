@@ -45,9 +45,8 @@
                     "title": "Advanced",
                     "items": [
                         {
-                            "name": "root_storage",
+                            "name": "root_storage_size",
                             "ui_label": "Root disk size (GB)"
-
                         }
                     ]
                 }
