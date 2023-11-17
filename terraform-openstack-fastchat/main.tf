@@ -57,7 +57,7 @@ locals {
   real_username = local.split_username[0]
 
   # for jetstream2, gpu flavors begin with g3
-  enable_gpu = startsWith(var.flavor, "g3")
+  enable_gpu = startswith(var.flavor, "g3")
 }
 
 resource "null_resource" "provision" {
