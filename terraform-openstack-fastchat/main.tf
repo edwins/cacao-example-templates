@@ -57,7 +57,7 @@ locals {
   real_username = local.split_username[0]
 
   # for jetstream2, gpu flavors begin with g3
-  enable_gpu = startswith(var.flavor, "g3")
+  enable_gpu = tostring(startswith(var.flavor, "g3"))
 }
 
 resource "null_resource" "provision" {
@@ -85,7 +85,7 @@ resource "null_resource" "provision" {
         nohup python3 -m fastchat.serve.controller >/var/log/fastchat/controller.log 2>&1 &
 
         # running the workers in the background
-        if ["${local.enable_gpu}" == "true"]; then
+        if [ "${local.enable_gpu}" == "true" ]; then
             nohup python3 -m fastchat.serve.model_worker --model-path lmsys/vicuna-7b-v1.5 >/var/log/fastchat/worker.log 2>&1 &
         else
             nohup python3 -m fastchat.serve.model_worker --model-path lmsys/vicuna-7b-v1.5 --device cpu >/var/log/fastchat/worker.log 2>&1 &
