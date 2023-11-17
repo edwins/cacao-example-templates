@@ -40,15 +40,8 @@
                     ]
                 },
                 {
-                    "type": "advanced_settings",
-                    "collapsible": true,
-                    "title": "Advanced",
-                    "items": [
-                        {
-                            "name": "root_storage_size",
-                            "ui_label": "Root disk size (GB)"
-                        }
-                    ]
+                    "name": "root_storage_size",
+                    "ui_label": "Root disk size (GB)"
                 }
             ]
         }
