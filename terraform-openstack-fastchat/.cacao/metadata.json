@@ -69,6 +69,16 @@
       "type": "integer",
       "description": "Size of root storage in GB",
       "default": 100
+    },
+    {
+      "name": "model",
+      "type": "string",
+      "default": "lmsys/vicuna-7b-v1.5",
+      "description": "Fastchat model",
+      "enum": [
+        "lmsys/vicuna-7b-v1.5",
+        "lmsys/vicuna-7b-v1.5-16k"
+      ]
     }
   ]
 }

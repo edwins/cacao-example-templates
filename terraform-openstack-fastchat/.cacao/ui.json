@@ -36,6 +36,11 @@
                     ]
                 },
                 {
+                    "name": "model",
+                    "ui_label": "Model",
+                    "field_type": "select"
+                },
+                {
                     "type": "advanced_settings",
                     "collapsible": true,
                     "title": "Advanced",
