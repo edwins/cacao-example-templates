@@ -77,10 +77,7 @@
       "description": "Fastchat model",
       "enum": [
         "lmsys/vicuna-7b-v1.5",
-        "lmsys/vicuna-7b-v1.5-16k",
-        "lmsys/vicuna-13b-v1.5",
-        "lmsys/vicuna-13b-v1.5-16k",
-        "lmsys/vicuna-33b-v1.3"
+        "lmsys/vicuna-7b-v1.5-16k"
       ]
     }
   ]
