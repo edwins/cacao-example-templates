@@ -104,7 +104,9 @@ resource "null_resource" "provision" {
         sleep 5
 
         # running gradio web in the background
-        nohup python3 -m fastchat.serve.gradio_web_server --port 8080 >/var/log/fastchat/web.log 2>&1 &
+        # need to launch as root to open on port 80
+        # nohup python3 -m fastchat.serve.gradio_web_server --port 80 >/var/log/fastchat/web.log 2>&1 &
+        sudo nohup python3 -m fastchat.serve.gradio_web_server --port 80 >/var/log/fastchat/web.log 2>&1 &
 
         sleep 1
         EOF
