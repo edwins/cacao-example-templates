@@ -41,7 +41,7 @@ variable "power_state" {
 variable "root_storage_size" {
   type = number
   description = "number, size in GB"
-  default = -1
+  default = 100
 }
 
 variable "user_data" {
@@ -53,10 +53,4 @@ variable "user_data" {
 variable "username" {
   type = string
   description = "username"
-}
-
-variable "enable_gpu" {
-    type = bool
-    description = "if set to true, will enable gpu; for example purposes since one can simply scan the flavor to set gpu"
-    default = false
 }

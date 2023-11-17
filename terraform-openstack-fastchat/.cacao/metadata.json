@@ -67,13 +67,7 @@
       "name": "root_storage_size",
       "type": "integer",
       "description": "Size of root storage in GB",
-      "default": -1
-    },
-    {
-      "name": "root_storage_delete_on_termination",
-      "type": "bool",
-      "description": "if true, will delete the root storage when instance is deleted",
-      "default": true
+      "default": 100
     }
   ]
 }

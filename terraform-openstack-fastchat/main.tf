@@ -55,6 +55,9 @@ resource "openstack_compute_floatingip_associate_v2" "os_floatingips_associate" 
 locals {
   split_username = split("@", var.username)
   real_username = local.split_username[0]
+
+  # for jetstream2, gpu flavors begin with g3
+  enable_gpu = startsWith(var.flavor, "g3")
 }
 
 resource "null_resource" "provision" {
@@ -75,16 +78,17 @@ resource "null_resource" "provision" {
         sudo pip3 install --upgrade jinja2
 
         # creating a directory for logs
-        mkdir /home/${local.real_username}/fastchat
+        sudo mkdir /var/log/fastchat
+        sudo chown ${local.real_username} /var/log/fastchat
 
         # running the controller in the background
-        nohup python3 -m fastchat.serve.controller >/home/${local.real_username}/fastchat/controller.log 2>&1 &
+        nohup python3 -m fastchat.serve.controller >/var/log/fastchat/controller.log 2>&1 &
 
         # running the workers in the background
-        if ["${var.enable_gpu}" == "true"]; then
-            nohup python3 -m fastchat.serve.model_worker --model-path lmsys/vicuna-7b-v1.5 >/home/${local.real_username}/fastchat/worker.log 2>&1 &
+        if ["${local.enable_gpu}" == "true"]; then
+            nohup python3 -m fastchat.serve.model_worker --model-path lmsys/vicuna-7b-v1.5 >/var/log/fastchat/worker.log 2>&1 &
         else
-            nohup python3 -m fastchat.serve.model_worker --model-path lmsys/vicuna-7b-v1.5 --device cpu >/home/${local.real_username}/fastchat/worker.log 2>&1 &
+            nohup python3 -m fastchat.serve.model_worker --model-path lmsys/vicuna-7b-v1.5 --device cpu >/var/log/fastchat/worker.log 2>&1 &
         fi
 
         # wait until workers are ready
@@ -100,7 +104,7 @@ resource "null_resource" "provision" {
         sleep 5
 
         # running gradio web in the background
-        nohup python3 -m fastchat.serve.gradio_web_server --port 8080 >/home/${local.real_username}/fastchat/web.log 2>&1 &
+        nohup python3 -m fastchat.serve.gradio_web_server --port 8080 >/var/log/fastchat/web.log 2>&1 &
 
         sleep 1
         EOF
