@@ -58,6 +58,9 @@ locals {
 
   # for jetstream2, gpu flavors begin with g3
   enable_gpu = tostring(startswith(var.flavor, "g3"))
+
+  model_tokenized = split("/", var.model)
+  model_name = model_tokenized[length(model_tokenized) - 1]]
 }
 
 resource "null_resource" "provision" {
@@ -92,12 +95,12 @@ resource "null_resource" "provision" {
         fi
 
         # wait until workers are ready
-        output=$(python3 -m fastchat.serve.test_message --model-name ${var.model})
+        output=$(python3 -m fastchat.serve.test_message --model-name ${local.model_name})
         ret=$?
         while [ $ret -ne 0 ] || [[ "$output" =~ "No available workers for" ]]; do
             echo "waiting for workers to be ready"
             sleep 5
-            output=$(python3 -m fastchat.serve.test_message --model-name ${var.model})
+            output=$(python3 -m fastchat.serve.test_message --model-name ${local.model_name})
             ret=$?
         done
         echo "done waiting for workers to be ready"
