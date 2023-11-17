@@ -83,18 +83,18 @@ resource "null_resource" "provision" {
 
         # running the workers in the background
         if [ "${local.enable_gpu}" == "true" ]; then
-            nohup python3 -m fastchat.serve.model_worker --model-path lmsys/vicuna-7b-v1.5 >/var/log/fastchat/worker.log 2>&1 &
+            nohup python3 -m fastchat.serve.model_worker --model-path ${var.model} >/var/log/fastchat/worker.log 2>&1 &
         else
-            nohup python3 -m fastchat.serve.model_worker --model-path lmsys/vicuna-7b-v1.5 --device cpu >/var/log/fastchat/worker.log 2>&1 &
+            nohup python3 -m fastchat.serve.model_worker --model-path ${var.model} --device cpu >/var/log/fastchat/worker.log 2>&1 &
         fi
 
         # wait until workers are ready
-        output=$(python3 -m fastchat.serve.test_message --model-name vicuna-7b-v1.5)
+        output=$(python3 -m fastchat.serve.test_message --model-name ${var.model})
         ret=$?
         while [ $ret -ne 0 ] || [[ "$output" =~ "No available workers for" ]]; do
             echo "waiting for workers to be ready"
             sleep 5
-            output=$(python3 -m fastchat.serve.test_message --model-name vicuna-7b-v1.5)
+            output=$(python3 -m fastchat.serve.test_message --model-name ${var.model})
             ret=$?
         done
         echo "done waiting for workers to be ready"

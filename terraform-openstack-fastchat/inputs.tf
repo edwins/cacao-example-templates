@@ -54,3 +54,9 @@ variable "username" {
   type = string
   description = "username"
 }
+
+variable "model" {
+  type = string
+  description = "fastchat model used within the workers"
+  default = "lmsys/vicuna-7b-v1.5"
+}
