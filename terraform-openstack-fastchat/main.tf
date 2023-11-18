@@ -57,7 +57,7 @@ locals {
   enable_gpu = tostring(startswith(var.flavor, "g3"))
 
   model_tokenized = split("/", var.model)
-  model_name = model_tokenized[length(model_tokenized) - 1]
+  model_name = local.model_tokenized[length(local.model_tokenized) - 1]
 }
 
 resource "null_resource" "provision" {
