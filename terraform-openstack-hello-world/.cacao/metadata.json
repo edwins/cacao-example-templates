@@ -11,7 +11,7 @@
   "parameters": [
     {
       "name": "username",
-      "type": "cacao_username",
+      "type": "cacao_username_unix",
       "description": "CACAO username"
     },
     {
