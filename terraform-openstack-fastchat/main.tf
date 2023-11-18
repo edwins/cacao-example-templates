@@ -53,9 +53,6 @@ resource "openstack_compute_floatingip_associate_v2" "os_floatingips_associate" 
 }
 
 locals {
-  split_username = split("@", var.username)
-  real_username = local.split_username[0]
-
   # for jetstream2, gpu flavors begin with g3
   enable_gpu = tostring(startswith(var.flavor, "g3"))
 }
@@ -66,7 +63,7 @@ resource "null_resource" "provision" {
   connection {
     type = "ssh"
     agent = true
-    user = local.real_username
+    user = var.username
     host = openstack_networking_floatingip_v2.os_floatingips[0].address
   }
 
@@ -79,7 +76,7 @@ resource "null_resource" "provision" {
 
         # creating a directory for logs
         sudo mkdir /var/log/fastchat
-        sudo chown ${local.real_username} /var/log/fastchat
+        sudo chown ${var.username} /var/log/fastchat
 
         # running the controller in the background
         nohup python3 -m fastchat.serve.controller >/var/log/fastchat/controller.log 2>&1 &
