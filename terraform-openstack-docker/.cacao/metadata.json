@@ -15,6 +15,11 @@
       "description": "OpenStack Project ID"
     },
     {
+      "name": "username",
+      "type": "cacao_username_linux",
+      "description": "cacao_username"
+    },
+    {
       "name": "region",
       "type": "cacao_provider_region",
       "default": "IU",
@@ -25,7 +30,11 @@
       "type": "string",
       "description": "Instance name"
     },
-
+    {
+      "name": "image",
+      "type": "cacao_provider_image_name",
+      "description": "Instance name"
+    },
     {
       "name": "flavor",
       "type": "cacao_provider_flavor",

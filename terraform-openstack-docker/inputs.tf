@@ -19,16 +19,9 @@ variable "instance_name" {
   description = "name of instance"
 }
 
-variable "image_uuid" {
-  type = string
-  description = "string, image id; image will have priority if both image and image name are provided"
-  default = ""
-}
-
-
 variable "image" {
   type = string
-  description = "string, image id; image will have priority if both image and image name are provided"
+  description = "string, image name"
   default = "Featured-Ubuntu22"
 }
 
