@@ -52,6 +52,11 @@ resource "openstack_compute_floatingip_associate_v2" "os_floatingips_associate" 
   instance_id = openstack_compute_instance_v2.os_instances.id
 }
 
+locals {
+  # for jetstream2, gpu flavors begin with g3
+  enable_gpu = tostring(startswith(var.flavor, "g3"))
+}
+
 resource "null_resource" "provision" {
   depends_on = [openstack_networking_floatingip_v2.os_floatingips[0],openstack_compute_instance_v2.os_instances]
 
@@ -70,16 +75,17 @@ resource "null_resource" "provision" {
         sudo pip3 install --upgrade jinja2
 
         # creating a directory for logs
-        mkdir /home/${var.username}/fastchat
+        sudo mkdir /var/log/fastchat
+        sudo chown ${var.username} /var/log/fastchat
 
         # running the controller in the background
-        nohup python3 -m fastchat.serve.controller >/home/${var.username}/fastchat/controller.log 2>&1 &
+        nohup python3 -m fastchat.serve.controller >/var/log/fastchat/controller.log 2>&1 &
 
         # running the workers in the background
-        if ["${var.enable_gpu}" == "true"]; then
-            nohup python3 -m fastchat.serve.model_worker --model-path lmsys/vicuna-7b-v1.5 >/home/${var.username}/fastchat/worker.log 2>&1 &
+        if [ "${local.enable_gpu}" == "true" ]; then
+            nohup python3 -m fastchat.serve.model_worker --model-path lmsys/vicuna-7b-v1.5 >/var/log/fastchat/worker.log 2>&1 &
         else
-            nohup python3 -m fastchat.serve.model_worker --model-path lmsys/vicuna-7b-v1.5 --device cpu >/home/${var.username}/fastchat/worker.log 2>&1 &
+            nohup python3 -m fastchat.serve.model_worker --model-path lmsys/vicuna-7b-v1.5 --device cpu >/var/log/fastchat/worker.log 2>&1 &
         fi
 
         # wait until workers are ready
@@ -95,7 +101,9 @@ resource "null_resource" "provision" {
         sleep 5
 
         # running gradio web in the background
-        nohup python3 -m fastchat.serve.gradio_web_server --port 8080 >/home/${var.username}/fastchat/web.log 2>&1 &
+        # need to launch as root to open on port 80
+        # nohup python3 -m fastchat.serve.gradio_web_server --port 80 >/var/log/fastchat/web.log 2>&1 &
+        sudo nohup python3 -m fastchat.serve.gradio_web_server --port 80 >/var/log/fastchat/web.log 2>&1 &
 
         sleep 1
         EOF

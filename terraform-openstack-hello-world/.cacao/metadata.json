@@ -10,6 +10,11 @@
   "cacao_post_tasks": [],
   "parameters": [
     {
+      "name": "username",
+      "type": "cacao_username_unix",
+      "description": "CACAO username"
+    },
+    {
       "name": "project",
       "type": "cacao_provider_project",
       "description": "OpenStack Project ID"
